@@ -1,0 +1,4402 @@
+@import url("https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:wght@400;500;600;700;800;900&family=Schoolbell&display=swap");
+
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #242033;
+  background: #fff7e9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(255, 105, 180, 0.1) 0 5px,
+      transparent 6px
+    ),
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(91, 192, 235, 0.13) 0 4px,
+      transparent 5px
+    ),
+    #fff7e9;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 3px solid #242033;
+  outline-offset: 4px;
+}
+
+.birthday-site {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.youtube-audio-player {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -100px;
+  top: -100px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --------------------------------
+   BORDER
+-------------------------------- */
+
+.site-border {
+  position: fixed;
+  inset: 10px;
+  border: 3px solid #242033;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.site-border::before,
+.site-border::after {
+  content: "✦  ♡  ✦  ♡  ✦  ♡  ✦  ♡  ✦  ♡  ✦";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff7e9;
+  color: #f2528f;
+  padding: 0 12px;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.site-border::before {
+  top: -12px;
+}
+
+.site-border::after {
+  bottom: -12px;
+}
+
+/* --------------------------------
+   TOAST
+-------------------------------- */
+
+.mail-toast {
+  position: fixed;
+  top: 85px;
+  right: 28px;
+  z-index: 150;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 3px solid #242033;
+  padding: 12px 15px;
+  box-shadow: 6px 6px 0 #242033;
+  animation:
+    toastIn 0.45s cubic-bezier(0.2, 1.4, 0.5, 1),
+    toastFloat 1.8s ease-in-out infinite 0.45s;
+}
+
+.toast-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #ffe45e;
+  border: 2px solid #242033;
+  font-size: 20px;
+}
+
+.mail-toast small {
+  display: block;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #f2528f;
+}
+
+.mail-toast strong {
+  display: block;
+  margin-top: 3px;
+  font-family: "Schoolbell", cursive;
+  font-size: 18px;
+}
+
+.toast-dot {
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #f2528f;
+  animation: blink 1s infinite;
+}
+
+/* --------------------------------
+   CONFETTI
+-------------------------------- */
+
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  left: var(--confetti-left);
+  top: -25px;
+  width: var(--confetti-size);
+  height: var(--confetti-size);
+  animation:
+    confettiBurst var(--confetti-duration)
+      cubic-bezier(0.18, 0.78, 0.32, 1)
+      var(--confetti-delay)
+      forwards;
+  opacity: 0;
+}
+
+.confetti-piece.square {
+  background: #f2528f;
+  border: 1px solid #242033;
+  transform: rotate(var(--confetti-rotation));
+}
+
+.confetti-piece.circle {
+  border-radius: 50%;
+  background: #6bd5d8;
+  border: 1px solid #242033;
+}
+
+.confetti-piece.strip {
+  width: calc(var(--confetti-size) * 0.55);
+  height: calc(var(--confetti-size) * 2.3);
+  background: #ffe45e;
+  border: 1px solid #242033;
+}
+
+.confetti-piece.star {
+  width: auto;
+  height: auto;
+  color: #8d79e8;
+  font-family: "Bagel Fat One", cursive;
+  font-size: calc(var(--confetti-size) * 1.7);
+  line-height: 1;
+}
+
+/* --------------------------------
+   DELIVERY TRACKER
+-------------------------------- */
+
+.delivery-tracker {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  background: #fff;
+  border: 2px solid #242033;
+  box-shadow: 4px 4px 0 #242033;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.delivery-tracker i {
+  width: 9px;
+  height: 9px;
+  border: 2px solid #242033;
+  border-radius: 50%;
+  background: #fff;
+  transition: 0.25s ease;
+}
+
+.delivery-tracker i.done {
+  background: #f2528f;
+  transform: scale(1.2);
+}
+
+/* --------------------------------
+   TOP BAR
+-------------------------------- */
+
+.top-bar {
+  width: min(1180px, calc(100% - 70px));
+  margin: 30px auto 0;
+  min-height: 54px;
+  border: 2px solid #242033;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 17px;
+  transform: rotate(-0.5deg);
+  box-shadow: 5px 5px 0 #242033;
+  position: relative;
+  z-index: 5;
+}
+
+.postmark {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f2528f;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.top-recipient {
+  font-family: "Schoolbell", cursive;
+  font-size: 16px;
+}
+
+.top-stamp {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  background: #ffe45e;
+  padding: 7px 10px;
+  border: 2px solid #242033;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+/* --------------------------------
+   HERO
+-------------------------------- */
+
+.hero {
+  width: min(1200px, calc(100% - 60px));
+  margin: 0 auto;
+  min-height: 760px;
+  display: flex;
+  align-items: center;
+  padding: 90px 55px 70px;
+  border-left: 3px solid #242033;
+  border-right: 3px solid #242033;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 49%,
+      rgba(242, 82, 143, 0.05) 50%,
+      transparent 51%
+    ),
+    #fff7e9;
+  position: relative;
+}
+
+.hero-layout {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.tiny-label {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #6bd5d8;
+  padding: 8px 12px;
+  border: 2px solid #242033;
+  box-shadow: 4px 4px 0 #242033;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  transform: rotate(-2deg);
+}
+
+.hero h1 {
+  margin: 25px 0 18px;
+  font-family: "Bagel Fat One", cursive;
+  font-size: clamp(70px, 9vw, 132px);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: #242033;
+  text-shadow: 5px 5px 0 #ffe45e;
+}
+
+.hero h1 span {
+  color: #f2528f;
+  text-shadow: 5px 5px 0 #6bd5d8;
+}
+
+.hero-subtitle {
+  max-width: 480px;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.mail-meta {
+  display: flex;
+  gap: 15px;
+  margin: 28px 0;
+}
+
+.mail-meta > div {
+  border: 2px solid #242033;
+  background: #fff;
+  padding: 11px 14px;
+  min-width: 150px;
+  box-shadow: 3px 3px 0 #242033;
+}
+
+.mail-meta span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+  color: #f2528f;
+}
+
+.mail-meta strong {
+  display: block;
+  margin-top: 3px;
+  font-family: "Schoolbell", cursive;
+  font-size: 17px;
+}
+
+.primary-button,
+.secondary-button,
+.music-button {
+  border: 2px solid #242033;
+  background: #f2528f;
+  color: white;
+  cursor: pointer;
+  font-weight: 800;
+  box-shadow: 5px 5px 0 #242033;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 15px 20px;
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.music-button:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 #242033;
+}
+
+.button-spark {
+  animation: sparkle 0.8s ease-in-out infinite alternate;
+}
+
+.hero-mini-note {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+  color: #f2528f;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+/* --------------------------------
+   HERO DECOR
+-------------------------------- */
+
+.decor {
+  position: absolute;
+  font-family: "Bagel Fat One", cursive;
+  pointer-events: none;
+}
+
+.decor-star {
+  font-size: 45px;
+  color: #8d79e8;
+  animation: floaty 2.2s ease-in-out infinite alternate;
+}
+
+.decor-star.one {
+  left: 4%;
+  top: 20%;
+}
+
+.decor-star.two {
+  right: 6%;
+  top: 14%;
+  color: #f2528f;
+  animation-delay: 0.4s;
+}
+
+.decor-heart {
+  right: 7%;
+  bottom: 19%;
+  color: #f2528f;
+  font-size: 45px;
+  transform: rotate(12deg);
+  animation: pulseSoft 1.8s ease-in-out infinite;
+}
+
+.decor-flower {
+  left: 4%;
+  bottom: 13%;
+  color: #6bd5d8;
+  font-size: 52px;
+  transform: rotate(-15deg);
+}
+
+/* --------------------------------
+   MAILBOX
+-------------------------------- */
+
+.mailbox-scene {
+  position: relative;
+  min-height: 440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mailbox {
+  width: 340px;
+  height: 270px;
+  position: relative;
+  margin-top: 80px;
+  transform: rotate(2deg);
+}
+
+.mailbox-top {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 280px;
+  height: 110px;
+  background: #f2528f;
+  border: 4px solid #242033;
+  border-radius: 140px 140px 0 0;
+}
+
+.mail-slot {
+  position: absolute;
+  left: 70px;
+  top: 35px;
+  width: 140px;
+  height: 18px;
+  border-radius: 20px;
+  background: #242033;
+}
+
+.mailbox-door {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 340px;
+  height: 205px;
+  background: #ff6fa5;
+  border: 4px solid #242033;
+  border-radius: 35px 35px 20px 20px;
+  overflow: hidden;
+}
+
+.mailbox-door::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 48px;
+  right: 48px;
+  height: 18px;
+  background: #ffe45e;
+  border: 3px solid #242033;
+  border-top: none;
+}
+
+.mailbox-handle {
+  position: absolute;
+  left: 145px;
+  bottom: 35px;
+  width: 50px;
+  height: 20px;
+  border: 4px solid #242033;
+  border-radius: 20px;
+}
+
+.mailbox-label {
+  position: absolute;
+  right: 30px;
+  top: 65px;
+  padding: 9px;
+  background: #fff;
+  border: 2px solid #242033;
+  font-size: 9px;
+  line-height: 1.4;
+  font-weight: 900;
+  transform: rotate(-5deg);
+}
+
+.mail-envelope {
+  position: absolute;
+  left: 72px;
+  top: 58px;
+  width: 195px;
+  height: 120px;
+  background: #fff7e9;
+  border: 3px solid #242033;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  color: #f2528f;
+  transform: rotate(-5deg);
+  box-shadow: 5px 5px 0 #242033;
+  transition: 0.6s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+
+.mail-envelope span {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 17px;
+  color: #242033;
+}
+
+.mailbox-scene.opened .mail-envelope {
+  transform: translateY(-115px) rotate(-5deg);
+}
+
+.mail-paper-one,
+.mail-paper-two {
+  position: absolute;
+  left: 120px;
+  top: 50px;
+  width: 100px;
+  height: 75px;
+  background: white;
+  border: 2px solid #242033;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  color: #f2528f;
+  opacity: 0;
+}
+
+.mailbox-scene.opened .mail-paper-one {
+  animation: paperPop 0.8s 0.15s forwards;
+}
+
+.mailbox-scene.opened .mail-paper-two {
+  animation: paperPopTwo 0.9s 0.25s forwards;
+}
+
+.mailbox-flag {
+  position: absolute;
+  top: 35px;
+  right: 20px;
+  z-index: 3;
+  transition: 0.5s ease;
+}
+
+.mailbox-scene.opened .mailbox-flag {
+  transform: rotate(-15deg);
+}
+
+.flag-stick {
+  height: 125px;
+  width: 8px;
+  background: #242033;
+  margin-left: 8px;
+}
+
+.flag-top {
+  width: 70px;
+  height: 42px;
+  border: 3px solid #242033;
+  background: #ffe45e;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 900;
+  transform: rotate(-4deg);
+}
+
+.mailbox-shadow {
+  position: absolute;
+  width: 310px;
+  height: 28px;
+  background: rgba(36, 32, 51, 0.18);
+  border-radius: 50%;
+  bottom: 28px;
+}
+
+.spark {
+  position: absolute;
+  font-family: "Bagel Fat One", cursive;
+  color: #f2528f;
+  font-size: 50px;
+  animation: floaty 2s ease-in-out infinite alternate;
+}
+
+.spark-a {
+  top: 50px;
+  left: 30px;
+}
+
+.spark-b {
+  bottom: 75px;
+  right: 10px;
+  color: #6bd5d8;
+  animation-delay: 0.5s;
+}
+
+/* --------------------------------
+   CSS CAKE STICKER
+-------------------------------- */
+
+.cake-sticker {
+  position: absolute;
+  z-index: 5;
+  right: -10px;
+  top: 70px;
+  width: 125px;
+  min-height: 145px;
+  padding: 12px;
+  background: #ffe45e;
+  border: 3px solid #242033;
+  box-shadow: 6px 6px 0 #242033;
+  transform: rotate(8deg);
+  animation: stickerFloat 2.8s ease-in-out infinite;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cake-sticker-stars {
+  font-size: 11px;
+  color: #f2528f;
+  letter-spacing: 9px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.cake-sticker-cake {
+  position: relative;
+  width: 82px;
+  height: 67px;
+  margin: 8px auto 7px;
+  font-size: 0;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0 48%,
+      #f2528f 49% 53%,
+      transparent 54%
+    ) 14px 34px / 12px 10px no-repeat,
+    linear-gradient(
+      60deg,
+      transparent 0 48%,
+      #4bb6ff 49% 53%,
+      transparent 54%
+    ) 31px 40px / 12px 10px no-repeat,
+    linear-gradient(
+      120deg,
+      transparent 0 48%,
+      #ffd447 49% 53%,
+      transparent 54%
+    ) 49px 34px / 12px 10px no-repeat,
+    linear-gradient(
+      60deg,
+      transparent 0 48%,
+      #7acb6b 49% 53%,
+      transparent 54%
+    ) 64px 40px / 10px 10px no-repeat,
+    linear-gradient(#ff91b7, #ff91b7) 8px 25px / 66px 35px no-repeat;
+  border: 3px solid #242033;
+  border-radius: 7px 7px 9px 9px;
+  box-shadow: 3px 4px 0 #242033;
+}
+
+.cake-sticker-cake::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 17px;
+  width: 70px;
+  height: 20px;
+  background:
+    radial-gradient(
+      circle at 8px 8px,
+      #fffaf2 0 8px,
+      transparent 8.5px
+    ),
+    radial-gradient(
+      circle at 23px 8px,
+      #fffaf2 0 8px,
+      transparent 8.5px
+    ),
+    radial-gradient(
+      circle at 39px 8px,
+      #fffaf2 0 8px,
+      transparent 8.5px
+    ),
+    radial-gradient(
+      circle at 55px 8px,
+      #fffaf2 0 8px,
+      transparent 8.5px
+    ),
+    radial-gradient(
+      circle at 68px 8px,
+      #fffaf2 0 8px,
+      transparent 8.5px
+    );
+  border-top: 3px solid #242033;
+}
+
+.cake-sticker-cake::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  bottom: -6px;
+  width: 86px;
+  height: 9px;
+  background: #7acbff;
+  border: 3px solid #242033;
+  border-radius: 50%;
+  box-shadow: 2px 3px 0 #242033;
+}
+
+.cake-sticker-candle {
+  position: absolute;
+  z-index: 3;
+  left: 36px;
+  top: -5px;
+  width: 10px;
+  height: 25px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #fffaf2 0 4px,
+      #f2528f 4px 8px
+    );
+  border: 2px solid #242033;
+  border-radius: 3px;
+}
+
+.cake-sticker-candle::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: -14px;
+  width: 7px;
+  height: 11px;
+  background: #ff9f1c;
+  border: 2px solid #242033;
+  border-radius: 70% 40% 65% 45%;
+  transform: rotate(5deg);
+  animation: candleFlicker 0.8s ease-in-out infinite alternate;
+}
+
+.cake-sticker-sprinkles {
+  position: absolute;
+  z-index: 4;
+  left: 13px;
+  top: 31px;
+  width: 6px;
+  height: 6px;
+  background: #f2528f;
+  border-radius: 50%;
+  box-shadow:
+    14px 7px 0 #4bb6ff,
+    28px 0 0 #ffd447,
+    42px 7px 0 #7acb6b,
+    53px -1px 0 #f2528f;
+}
+
+.cake-sticker strong {
+  display: block;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 15px;
+  line-height: 0.9;
+  color: #242033;
+  margin-top: 5px;
+}
+
+.cake-sticker small {
+  display: block;
+  margin-top: 6px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  color: #f2528f;
+}
+
+/* --------------------------------
+   SCROLL
+-------------------------------- */
+
+.scroll-note {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  color: #f2528f;
+  animation: bounceDown 1.6s ease-in-out infinite;
+}
+
+/* --------------------------------
+   SECTIONS
+-------------------------------- */
+
+.section-wrap {
+  width: min(1000px, calc(100% - 60px));
+  margin: 0 auto;
+  padding: 120px 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.section-label span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #242033;
+  background: #ffe45e;
+  box-shadow: 3px 3px 0 #242033;
+}
+
+/* --------------------------------
+   LETTER
+-------------------------------- */
+
+.letter-paper {
+  position: relative;
+  padding: 75px 85px 45px;
+  background: #fff;
+  border: 3px solid #242033;
+  box-shadow: 10px 10px 0 #242033;
+  transform: rotate(-0.6deg);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 35px,
+    rgba(36, 32, 51, 0.08) 36px
+  );
+}
+
+.paper-tape {
+  position: absolute;
+  width: 130px;
+  height: 30px;
+  background: rgba(255, 228, 94, 0.8);
+  top: -14px;
+}
+
+.tape-left {
+  left: 70px;
+  transform: rotate(-6deg);
+}
+
+.tape-right {
+  right: 70px;
+  transform: rotate(7deg);
+}
+
+.letter-stamp {
+  position: absolute;
+  right: 35px;
+  top: 30px;
+  width: 70px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  background: #6bd5d8;
+  border: 2px dashed #242033;
+  transform: rotate(4deg);
+}
+
+.letter-stamp span {
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.letter-postmark {
+  position: absolute;
+  left: 35px;
+  top: 30px;
+  width: 100px;
+  height: 70px;
+  border: 2px dashed #f2528f;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1.3;
+  transform: rotate(-8deg);
+  color: #f2528f;
+}
+
+.sealed-letter {
+  min-height: 350px;
+  display: grid;
+  place-items: center;
+}
+
+.sealed-envelope {
+  width: min(420px, 90%);
+  padding: 45px 30px;
+  border: 3px solid #242033;
+  background: #ffe45e;
+  box-shadow: 7px 7px 0 #242033;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  transform: rotate(1deg);
+  position: relative;
+}
+
+.envelope-heart {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  color: #f2528f;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 30px;
+  animation: pulseSoft 1.5s infinite;
+}
+
+.sealed-envelope span {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.sealed-envelope strong {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 30px;
+}
+
+.sealed-envelope .secondary-button {
+  margin-top: 10px;
+  background: #f2528f;
+}
+
+.letter-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.letter-reveal {
+  animation: letterReveal 0.6s ease;
+}
+
+.handwritten-small {
+  font-family: "Schoolbell", cursive;
+  font-size: 19px;
+  color: #f2528f;
+}
+
+.letter-content h2,
+.memory-heading h2 {
+  font-family: "Bagel Fat One", cursive;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.95;
+  margin: 20px 0;
+  color: #242033;
+}
+
+.letter-content p {
+  font-size: 18px;
+  line-height: 2;
+  margin: 0;
+}
+
+.letter-signoff {
+  margin-top: 45px;
+  font-family: "Schoolbell", cursive;
+  font-size: 24px;
+  color: #f2528f;
+}
+
+.letter-signoff span {
+  margin-left: 8px;
+  font-size: 35px;
+}
+
+.letter-reaction {
+  display: flex;
+  gap: 15px;
+  margin-top: 22px;
+  color: #6bd5d8;
+  font-size: 21px;
+}
+
+.letter-reaction span:nth-child(2) {
+  color: #f2528f;
+}
+
+.letter-reaction span:nth-child(3) {
+  color: #ffe45e;
+}
+
+.letter-reaction span:nth-child(4) {
+  color: #8d79e8;
+}
+
+.letter-bottom {
+  margin-top: 60px;
+  padding-top: 15px;
+  border-top: 2px solid #242033;
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+/* --------------------------------
+   PHOTOS
+-------------------------------- */
+
+.photos-section {
+  text-align: center;
+}
+
+.photo-delivery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.photo-arrow {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #242033;
+  background: #ffe45e;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #242033;
+  display: grid;
+  place-items: center;
+  transition: 0.15s ease;
+}
+
+.photo-arrow:hover {
+  transform: translate(3px, 3px) rotate(-4deg);
+  box-shadow: 1px 1px 0 #242033;
+}
+
+.postcard {
+  width: min(680px, 100%);
+  background: #fff;
+  border: 3px solid #242033;
+  padding: 18px;
+  box-shadow: 9px 9px 0 #242033;
+  transform: rotate(1deg);
+}
+
+.postcard-top-strip {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3px 10px;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.postcard-image-wrap {
+  height: 420px;
+  position: relative;
+  border: 2px solid #242033;
+  overflow: hidden;
+  background: #f2e9db;
+}
+
+.postcard-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.postcard:hover img {
+  transform: scale(1.035);
+}
+
+.photo-number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #242033;
+  background: #f2528f;
+  color: white;
+  font-family: "Bagel Fat One", cursive;
+}
+
+.photo-corner {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: #ffe45e;
+  border: 2px solid #242033;
+  color: #f2528f;
+  transform: rotate(7deg);
+}
+
+.postcard-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 4px 2px;
+  text-align: left;
+}
+
+.postcard-date {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  color: #f2528f;
+}
+
+.postcard-details p {
+  font-family: "Schoolbell", cursive;
+  font-size: 20px;
+  margin: 5px 0 0;
+}
+
+.postcard-stamp {
+  width: 55px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #6bd5d8;
+  border: 2px dashed #242033;
+  transform: rotate(5deg);
+}
+
+.postcard-stamp small {
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.photo-counter {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.photo-counter button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid #242033;
+  background: #fff;
+  cursor: pointer;
+}
+
+.photo-counter button.active {
+  background: #f2528f;
+}
+
+/* --------------------------------
+   MEMORY STAMPS
+-------------------------------- */
+
+.memories-section {
+  text-align: center;
+}
+
+.memory-heading {
+  position: relative;
+}
+
+.memory-heading p {
+  margin-top: -15px;
+  font-size: 17px;
+}
+
+.mini-postage {
+  position: absolute;
+  right: 20px;
+  top: -15px;
+  width: 75px;
+  min-height: 95px;
+  padding: 8px;
+  background: #6bd5d8;
+  border: 2px dashed #242033;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transform: rotate(7deg);
+}
+
+.mini-postage span {
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.mini-postage strong {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 30px;
+}
+
+.mini-postage small {
+  font-size: 6px;
+  font-weight: 900;
+}
+
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 50px;
+}
+
+.memory-stamp {
+  aspect-ratio: 0.88;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  clip-path: polygon(
+    0 5%,
+    5% 5%,
+    5% 0,
+    10% 5%,
+    15% 0,
+    20% 5%,
+    25% 0,
+    30% 5%,
+    35% 0,
+    40% 5%,
+    45% 0,
+    50% 5%,
+    55% 0,
+    60% 5%,
+    65% 0,
+    70% 5%,
+    75% 0,
+    80% 5%,
+    85% 0,
+    90% 5%,
+    95% 0,
+    95% 5%,
+    100% 5%,
+    95% 10%,
+    100% 15%,
+    95% 20%,
+    100% 25%,
+    95% 30%,
+    100% 35%,
+    95% 40%,
+    100% 45%,
+    95% 50%,
+    100% 55%,
+    95% 60%,
+    100% 65%,
+    95% 70%,
+    100% 75%,
+    95% 80%,
+    100% 85%,
+    95% 90%,
+    100% 95%,
+    95% 100%,
+    90% 95%,
+    85% 100%,
+    80% 95%,
+    75% 100%,
+    70% 95%,
+    65% 100%,
+    60% 95%,
+    55% 100%,
+    50% 95%,
+    45% 100%,
+    40% 95%,
+    35% 100%,
+    30% 95%,
+    25% 100%,
+    20% 95%,
+    15% 100%,
+    10% 95%,
+    5% 100%,
+    5% 95%,
+    0 95%,
+    5% 90%,
+    0 85%,
+    5% 80%,
+    0 75%,
+    5% 70%,
+    0 65%,
+    5% 60%,
+    0 55%,
+    5% 50%,
+    0 45%,
+    5% 40%,
+    0 35%,
+    5% 30%,
+    0 25%,
+    5% 20%,
+    0 15%,
+    5% 10%
+  );
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.memory-stamp:hover {
+  transform: rotate(-3deg) scale(1.05);
+  filter: brightness(1.04);
+}
+
+.memory-stamp.pink {
+  background: #f2528f;
+}
+
+.memory-stamp.blue {
+  background: #6bd5d8;
+}
+
+.memory-stamp.yellow {
+  background: #ffe45e;
+}
+
+.memory-stamp.purple {
+  background: #8d79e8;
+}
+
+/*
+   MEMORY STAMP INNER
+   adjusted so the stamp number/title/footer
+   don't overlap on longer memory titles
+*/
+
+.stamp-inner {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  border: 2px dashed #242033;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stamp-perforation {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  color: #f2528f;
+  font-size: 7px;
+  opacity: 0.7;
+}
+
+.stamp-topline {
+  width: 100%;
+  min-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.stamp-topline span {
+  min-width: 0;
+  max-width: 72%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stamp-topline strong {
+  flex: 0 0 auto;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.stamp-icon {
+  flex: 0 0 auto;
+  margin: 7px 0 5px;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 38px;
+  line-height: 1;
+  color: #f2528f;
+  animation: stampIconFloat 2s ease-in-out infinite;
+}
+
+.memory-stamp.blue .stamp-icon {
+  color: #3aaeb2;
+}
+
+.memory-stamp.yellow .stamp-icon {
+  color: #f39a00;
+}
+
+.memory-stamp.purple .stamp-icon {
+  color: #8d79e8;
+}
+
+.stamp-inner h3 {
+  width: 100%;
+  min-height: 38px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 19px;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.stamp-preview {
+  width: 100%;
+  max-width: 150px;
+  margin: 7px 0 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 11px;
+  line-height: 1.2;
+  opacity: 0.72;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.stamp-inner small {
+  margin-top: auto;
+  padding-top: 7px;
+  font-size: 6.5px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #f2528f;
+  white-space: nowrap;
+}
+
+.stamp-barcode {
+  margin-top: 6px;
+  flex: 0 0 auto;
+  font-family: monospace;
+  font-size: 6px;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+/* --------------------------------
+   DATE MEMO
+-------------------------------- */
+
+.date-memo-section {
+  position: relative;
+  padding: 90px 20px;
+  background: #fff7e9;
+  overflow: hidden;
+}
+
+.date-memo-section .section-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #f2528f;
+}
+
+.date-memo-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.date-memo-card {
+  position: relative;
+  width: min(680px, 100%);
+  padding: 0;
+  background: #fffdf6;
+  border: 3px solid #242033;
+  box-shadow: 10px 10px 0 #242033;
+  transform: rotate(-1deg);
+  overflow: hidden;
+}
+
+.date-memo-tape {
+  position: absolute;
+  z-index: 4;
+  width: 92px;
+  height: 25px;
+  background: rgba(255, 228, 94, 0.82);
+  border: 1px solid rgba(36, 32, 51, 0.08);
+}
+
+.date-memo-tape.tape-left {
+  left: 55px;
+  top: -10px;
+  transform: rotate(-8deg);
+}
+
+.date-memo-tape.tape-right {
+  right: 55px;
+  top: -10px;
+  transform: rotate(7deg);
+}
+
+.date-memo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: #242033;
+  color: #fff7e9;
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.date-memo-stamp {
+  position: absolute;
+  top: 48px;
+  right: 24px;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ff91b7;
+  border: 3px solid #242033;
+  transform: rotate(8deg);
+  box-shadow: 4px 4px 0 #242033;
+}
+
+.date-memo-stamp span {
+  font-size: 27px;
+  line-height: 1;
+}
+
+.date-memo-stamp small {
+  margin-top: 3px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.date-memo-content {
+  position: relative;
+  padding: 52px 65px 38px;
+  text-align: center;
+}
+
+.date-memo-eyebrow {
+  margin: 0 0 7px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #f2528f;
+}
+
+.date-memo-content h2 {
+  margin: 0;
+  font-family: "Bagel Fat One", cursive;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 0.95;
+  color: #242033;
+}
+
+.date-memo-intro {
+  max-width: 500px;
+  margin: 18px auto 28px;
+  font-family: "Schoolbell", cursive;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #4b455b;
+}
+
+.date-memo-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0 auto 24px;
+  border-top: 2px dashed #242033;
+  border-bottom: 2px dashed #242033;
+}
+
+.date-memo-details > div {
+  min-width: 0;
+  padding: 17px 10px;
+}
+
+.date-memo-details > div + div {
+  border-left: 2px dashed #242033;
+}
+
+.date-memo-details span {
+  display: block;
+  margin-bottom: 6px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #f2528f;
+}
+
+.date-memo-details strong {
+  display: block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #242033;
+}
+
+.date-memo-note {
+  margin: 0 0 22px;
+  font-family: "Schoolbell", cursive;
+  font-size: 17px;
+  color: #242033;
+}
+
+.date-question {
+  margin: 0 0 18px;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 22px;
+  color: #242033;
+}
+
+.date-buttons-area {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+}
+
+.date-yes-button,
+.date-no-button {
+  min-width: 115px;
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 3px solid #242033;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.date-yes-button {
+  background: #ff91b7;
+  color: #242033;
+  box-shadow: 5px 5px 0 #242033;
+}
+
+.date-yes-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 8px 0 #242033;
+}
+
+.date-no-zone {
+  position: relative;
+  width: 115px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-no-button {
+  position: absolute;
+  width: 115px;
+  min-width: 115px;
+  background: #fff7e9;
+  color: #242033;
+  box-shadow: 4px 4px 0 #242033;
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.15s ease;
+}
+
+.date-no-button:hover {
+  background: #ffe45e;
+}
+
+.date-silly-message {
+  min-height: 22px;
+  margin-top: 12px;
+  font-family: "Schoolbell", cursive;
+  font-size: 15px;
+  color: #f2528f;
+  animation: sillyPop 0.25s ease-out;
+}
+
+.date-confirmed {
+  margin-top: 5px;
+  padding: 20px;
+  background: #ffe45e;
+  border: 3px dashed #242033;
+  animation: confirmedPop 0.35s ease-out;
+}
+
+.date-confirmed-heart {
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 7px;
+}
+
+.date-confirmed strong {
+  display: block;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.date-confirmed p {
+  margin: 10px 0 5px;
+  font-family: "Schoolbell", cursive;
+  font-size: 18px;
+}
+
+.date-confirmed span {
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.date-memo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-top: 3px solid #242033;
+  font-family: "DM Sans", sans-serif;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #242033;
+}
+
+/* --------------------------------
+   PACKAGE
+-------------------------------- */
+
+.package-section {
+  text-align: center;
+}
+
+.package-area {
+  min-height: 570px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #6bd5d8;
+  border: 3px solid #242033;
+  box-shadow: 10px 10px 0 #242033;
+  padding: 50px;
+  overflow: hidden;
+}
+
+.package-stars {
+  font-size: 35px;
+  color: #fff;
+  letter-spacing: 20px;
+  margin-bottom: 20px;
+}
+
+.package-box {
+  width: 260px;
+  height: 210px;
+  background: #f6a15b;
+  border: 4px solid #242033;
+  position: relative;
+  box-shadow: 8px 8px 0 #242033;
+  transform: rotate(-2deg);
+  transition: 0.3s ease;
+}
+
+.package-box:hover {
+  transform: rotate(2deg) translateY(-8px);
+}
+
+.package-tape {
+  position: absolute;
+  width: 55px;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffe45e;
+  border-left: 2px solid #242033;
+  border-right: 2px solid #242033;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+
+.package-front {
+  position: absolute;
+  inset: 30px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  border: 2px dashed #242033;
+}
+
+.package-front span {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.package-front strong {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 25px;
+}
+
+.package-label {
+  margin-top: 3px;
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.package-area h2 {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 45px;
+  margin: 40px 0 20px;
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #242033;
+  padding: 14px 20px;
+}
+
+.package-reveal {
+  max-width: 600px;
+  animation: popIn 0.5s ease;
+}
+
+.reveal-burst {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  margin-bottom: 15px;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 30px;
+  color: #f2528f;
+  animation: revealStars 1.4s ease-in-out infinite;
+}
+
+.reveal-burst span:nth-child(2) {
+  color: #ffe45e;
+}
+
+.reveal-burst span:nth-child(3) {
+  color: #8d79e8;
+}
+
+.reveal-burst span:nth-child(4) {
+  color: #f2528f;
+}
+
+.reveal-burst span:nth-child(5) {
+  color: #fff;
+}
+
+.reveal-icon {
+  width: 90px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  background: #ffe45e;
+  border: 3px solid #242033;
+  border-radius: 50%;
+  animation: revealBounce 0.7s ease;
+}
+
+.reveal-label {
+  margin-top: 20px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.package-reveal h2 {
+  color: #242033;
+  margin-top: 20px;
+}
+
+.package-reveal p {
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.confetti-text {
+  margin-top: 30px;
+  font-size: 30px;
+  color: #f2528f;
+}
+
+/* --------------------------------
+   MUSIC
+-------------------------------- */
+
+.music-section {
+  text-align: center;
+}
+
+.music-card {
+  position: relative;
+  background: #f2528f;
+  color: #fff;
+  border: 3px solid #242033;
+  box-shadow: 9px 9px 0 #242033;
+  padding: 45px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.music-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 35px;
+}
+
+.record {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      #ffe45e 0 13px,
+      #242033 14px 18px,
+      transparent 19px
+    ),
+    repeating-radial-gradient(
+      circle,
+      #242033 0 2px,
+      #333 3px 4px
+    );
+  border: 4px solid #242033;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.record.spinning {
+  animation: spin 3s linear infinite;
+}
+
+.record-center {
+  color: #f2528f;
+  font-size: 20px;
+}
+
+.music-info span {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.music-info h3 {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 38px;
+  margin: 7px 0;
+}
+
+.music-info p {
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 20px;
+}
+
+.music-button {
+  position: absolute;
+  right: 40px;
+  bottom: 35px;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  background: #ffe45e;
+  color: #242033;
+}
+
+.music-status {
+  position: absolute;
+  right: 42px;
+  bottom: 98px;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.music-lines {
+  position: absolute;
+  right: -20px;
+  top: 15px;
+  font-size: 35px;
+  transform: rotate(10deg);
+  opacity: 0.35;
+}
+
+.music-note-pill {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 25px;
+  padding: 7px 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.7);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+/* --------------------------------
+   FINAL
+-------------------------------- */
+
+.final-section {
+  width: min(1100px, calc(100% - 60px));
+  margin: 0 auto;
+  min-height: 800px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 100px 0;
+}
+
+.final-envelope {
+  position: relative;
+  width: min(800px, 100%);
+  min-height: 580px;
+  background: #fff;
+  border: 3px solid #242033;
+  box-shadow: 12px 12px 0 #242033;
+  padding: 85px 70px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.final-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 49.5%,
+      #242033 50%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      225deg,
+      transparent 49.5%,
+      #242033 50%,
+      transparent 50.5%
+    );
+  opacity: 0.07;
+}
+
+.final-stamp {
+  width: 75px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  background: #ffe45e;
+  border: 2px dashed #242033;
+  margin: 0 auto 30px;
+  transform: rotate(4deg);
+}
+
+.final-stamp span {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 18px;
+}
+
+.final-small {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: #f2528f;
+}
+
+.final-content h2 {
+  font-family: "Bagel Fat One", cursive;
+  font-size: clamp(55px, 9vw, 100px);
+  line-height: 0.9;
+  margin: 20px 0;
+  color: #f2528f;
+  text-shadow: 4px 4px 0 #6bd5d8;
+}
+
+.final-content p {
+  max-width: 570px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.final-divider {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 35px 0;
+  color: #6bd5d8;
+  font-size: 25px;
+}
+
+.final-footer {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.delivery-complete {
+  width: fit-content;
+  margin: 30px auto 0;
+  padding: 8px 12px;
+  border: 2px dashed #242033;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8px;
+  font-weight: 900;
+  color: #f2528f;
+  animation: pulseSoft 2s ease-in-out infinite;
+}
+
+.final-decor {
+  position: absolute;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 70px;
+  color: #f2528f;
+}
+
+.decor-left {
+  left: 0;
+  top: 25%;
+  transform: rotate(-15deg);
+}
+
+.decor-right {
+  right: 0;
+  bottom: 25%;
+  color: #6bd5d8;
+  transform: rotate(15deg);
+}
+
+/* --------------------------------
+   FOOTER
+-------------------------------- */
+
+.site-footer {
+  width: min(1000px, calc(100% - 60px));
+  margin: 0 auto 40px;
+  padding: 20px;
+  border-top: 2px solid #242033;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+/* --------------------------------
+   MEMORY MODAL
+-------------------------------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(36, 32, 51, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.memory-modal {
+  position: relative;
+  width: min(500px, 100%);
+  background: #fff7e9;
+  border: 3px solid #242033;
+  box-shadow: 10px 10px 0 #242033;
+  padding: 55px 45px 45px;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 38px;
+  height: 38px;
+  border: 2px solid #242033;
+  background: #ffe45e;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.modal-stamp-decoration {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f2528f;
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.modal-stamp-decoration strong {
+  font-size: 14px;
+}
+
+.modal-stamp {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  border: 2px dashed #242033;
+  font-family: "Bagel Fat One", cursive;
+  font-size: 22px;
+  animation: modalStampPop 0.45s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+
+.modal-stamp.pink {
+  background: #f2528f;
+}
+
+.modal-stamp.blue {
+  background: #6bd5d8;
+}
+
+.modal-stamp.yellow {
+  background: #ffe45e;
+}
+
+.modal-stamp.purple {
+  background: #8d79e8;
+}
+
+.modal-stamp span {
+  font-size: 25px;
+}
+
+.modal-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #f2528f;
+}
+
+.memory-modal h2 {
+  font-family: "Bagel Fat One", cursive;
+  font-size: 43px;
+  margin: 15px 0;
+}
+
+.memory-modal p {
+  font-family: "Schoolbell", cursive;
+  font-size: 23px;
+  line-height: 1.5;
+}
+
+.modal-divider {
+  margin-top: 20px;
+  color: #f2528f;
+}
+
+.modal-footer-note {
+  margin-top: 18px;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+/* --------------------------------
+   ANIMATIONS
+-------------------------------- */
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(80px) rotate(3deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+@keyframes toastFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform:
+      translate3d(0, -15px, 0)
+      rotate(var(--confetti-rotation))
+      scale(0.8);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate3d(
+        var(--confetti-drift),
+        105vh,
+        0
+      )
+      rotate(calc(var(--confetti-rotation) + 720deg))
+      scale(1);
+  }
+}
+
+@keyframes paperPop {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-80px, -130px) rotate(-12deg);
+  }
+}
+
+@keyframes paperPopTwo {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(100px, -100px) rotate(13deg);
+  }
+}
+
+@keyframes floaty {
+  from {
+    transform: translateY(0) rotate(-4deg);
+  }
+
+  to {
+    transform: translateY(-12px) rotate(5deg);
+  }
+}
+
+@keyframes sparkle {
+  from {
+    transform: scale(0.8) rotate(0);
+  }
+
+  to {
+    transform: scale(1.25) rotate(20deg);
+  }
+}
+
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes revealBounce {
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes revealStars {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(2deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes stickerFloat {
+  0%,
+  100% {
+    transform: rotate(8deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(5deg) translateY(-8px);
+  }
+}
+
+@keyframes candleFlicker {
+  from {
+    transform: rotate(-5deg) scale(0.9);
+  }
+
+  to {
+    transform: rotate(5deg) scale(1.05);
+  }
+}
+
+@keyframes stampIconFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(3deg);
+  }
+}
+
+@keyframes modalStampPop {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-12deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, 6px);
+  }
+}
+
+@keyframes sillyPop {
+  from {
+    opacity: 0;
+    transform: translateY(5px) rotate(-2deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes confirmedPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) rotate(-2deg);
+  }
+
+  70% {
+    transform: scale(1.03) rotate(1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* --------------------------------
+   TABLET
+-------------------------------- */
+
+@media (max-width: 850px) {
+  .site-border {
+    inset: 6px;
+  }
+
+  .top-bar {
+    width: calc(100% - 35px);
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .hero {
+    width: calc(100% - 25px);
+    padding: 70px 20px 60px;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .hero h1 {
+    font-size: clamp(60px, 17vw, 100px);
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .mailbox-scene {
+    min-height: 410px;
+  }
+
+  .cake-sticker {
+    right: 2%;
+    top: 55px;
+  }
+
+  .section-wrap {
+    width: calc(100% - 35px);
+    padding: 80px 0;
+  }
+
+  .letter-paper {
+    padding: 90px 25px 35px;
+  }
+
+  .letter-postmark {
+    left: 20px;
+  }
+
+  .letter-stamp {
+    right: 20px;
+  }
+
+  .letter-content h2 {
+    font-size: 48px;
+  }
+
+  .letter-content p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .letter-bottom {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .photo-delivery {
+    gap: 8px;
+  }
+
+  .photo-arrow {
+    width: 43px;
+    height: 43px;
+  }
+
+  .postcard {
+    padding: 12px;
+  }
+
+  .postcard-image-wrap {
+    height: 330px;
+  }
+
+  .stamp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .package-area {
+    padding: 35px 20px;
+  }
+
+  .music-card {
+    padding: 35px 25px 110px;
+  }
+
+  .music-info {
+    gap: 18px;
+  }
+
+  .record {
+    width: 90px;
+    height: 90px;
+  }
+
+  .music-info h3 {
+    font-size: 28px;
+  }
+
+  .final-section {
+    width: calc(100% - 35px);
+    padding: 70px 0;
+  }
+
+  .final-envelope {
+    padding: 65px 25px 45px;
+  }
+
+  .final-content h2 {
+    font-size: 62px;
+  }
+
+  .final-decor {
+    display: none;
+  }
+
+  .site-footer {
+    width: calc(100% - 35px);
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mail-toast {
+    right: 18px;
+    left: 18px;
+    min-width: 0;
+  }
+
+  .delivery-tracker {
+    bottom: 12px;
+  }
+
+  .mini-postage {
+    position: static;
+    margin: 0 auto 20px;
+  }
+
+  /* DATE MEMO TABLET */
+
+  .date-memo-section {
+    padding: 75px 18px;
+  }
+
+  .date-memo-content {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+}
+
+/* --------------------------------
+   MOBILE
+-------------------------------- */
+
+@media (max-width: 520px) {
+  .top-recipient {
+    width: 100%;
+    text-align: center;
+    order: 3;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero h1 {
+    font-size: clamp(55px, 17vw, 82px);
+  }
+
+  .mail-meta {
+    flex-direction: column;
+  }
+
+  .mail-meta > div {
+    width: 100%;
+  }
+
+  .hero-mini-note {
+    font-size: 7px;
+  }
+
+  .mailbox {
+    transform: scale(0.76) rotate(2deg);
+  }
+
+  .mailbox-scene {
+    min-height: 350px;
+    margin-left: -30px;
+    margin-right: -30px;
+  }
+
+  .mailbox-scene.opened .mail-envelope {
+    transform: translateY(-95px) rotate(-5deg);
+  }
+
+  /* CSS CAKE MOBILE */
+
+  .cake-sticker {
+    width: 100px;
+    min-height: 120px;
+    right: 0;
+    top: 65px;
+    padding: 8px;
+    box-shadow: 4px 4px 0 #242033;
+  }
+
+  .cake-sticker-stars {
+    font-size: 8px;
+    letter-spacing: 6px;
+    margin-bottom: 2px;
+  }
+
+  .cake-sticker-cake {
+    width: 68px;
+    height: 55px;
+    margin: 6px auto 5px;
+    background:
+      linear-gradient(
+        120deg,
+        transparent 0 48%,
+        #f2528f 49% 53%,
+        transparent 54%
+      ) 11px 29px / 10px 9px no-repeat,
+      linear-gradient(
+        60deg,
+        transparent 0 48%,
+        #4bb6ff 49% 53%,
+        transparent 54%
+      ) 26px 34px / 10px 9px no-repeat,
+      linear-gradient(
+        120deg,
+        transparent 0 48%,
+        #ffd447 49% 53%,
+        transparent 54%
+      ) 41px 29px / 10px 9px no-repeat,
+      linear-gradient(
+        60deg,
+        transparent 0 48%,
+        #7acb6b 49% 53%,
+        transparent 54%
+      ) 53px 34px / 9px 9px no-repeat,
+      linear-gradient(#ff91b7, #ff91b7) 7px 21px / 55px 29px no-repeat;
+    border-width: 2px;
+    box-shadow: 2px 3px 0 #242033;
+  }
+
+  .cake-sticker-cake::before {
+    left: 2px;
+    top: 14px;
+    width: 59px;
+    height: 17px;
+    background:
+      radial-gradient(
+        circle at 7px 7px,
+        #fffaf2 0 7px,
+        transparent 7.5px
+      ),
+      radial-gradient(
+        circle at 20px 7px,
+        #fffaf2 0 7px,
+        transparent 7.5px
+      ),
+      radial-gradient(
+        circle at 34px 7px,
+        #fffaf2 0 7px,
+        transparent 7.5px
+      ),
+      radial-gradient(
+        circle at 48px 7px,
+        #fffaf2 0 7px,
+        transparent 7.5px
+      ),
+      radial-gradient(
+        circle at 59px 7px,
+        #fffaf2 0 7px,
+        transparent 7.5px
+      );
+    border-top-width: 2px;
+  }
+
+  .cake-sticker-cake::after {
+    left: -4px;
+    bottom: -5px;
+    width: 72px;
+    height: 8px;
+    border-width: 2px;
+    box-shadow: 1px 2px 0 #242033;
+  }
+
+  .cake-sticker-candle {
+    left: 29px;
+    top: -5px;
+    width: 8px;
+    height: 21px;
+    border-width: 2px;
+  }
+
+  .cake-sticker-candle::before {
+    left: 0;
+    top: -12px;
+    width: 6px;
+    height: 9px;
+    border-width: 2px;
+  }
+
+  .cake-sticker-sprinkles {
+    left: 10px;
+    top: 26px;
+    width: 5px;
+    height: 5px;
+    box-shadow:
+      12px 6px 0 #4bb6ff,
+      24px 0 0 #ffd447,
+      36px 6px 0 #7acb6b,
+      46px -1px 0 #f2528f;
+  }
+
+  .cake-sticker strong {
+    font-size: 11px;
+    line-height: 0.9;
+    margin-top: 3px;
+  }
+
+  .cake-sticker small {
+    font-size: 6px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .spark-a {
+    left: 5px;
+  }
+
+  .spark-b {
+    right: 0;
+  }
+
+  .scroll-note {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    justify-content: center;
+    margin-top: 35px;
+  }
+
+  .letter-paper {
+    box-shadow: 6px 6px 0 #242033;
+  }
+
+  .letter-stamp {
+    transform: scale(0.8) rotate(4deg);
+    transform-origin: top right;
+  }
+
+  .letter-postmark {
+    transform: scale(0.75) rotate(-8deg);
+    transform-origin: top left;
+  }
+
+  .letter-content h2 {
+    font-size: 40px;
+  }
+
+  .letter-content p {
+    font-size: 15px;
+  }
+
+  .sealed-letter {
+    min-height: 300px;
+  }
+
+  .photo-delivery {
+    align-items: center;
+  }
+
+  .postcard {
+    width: calc(100% - 75px);
+  }
+
+  .postcard-image-wrap {
+    height: 280px;
+  }
+
+  .postcard-details {
+    gap: 8px;
+  }
+
+  .postcard-details p {
+    font-size: 17px;
+  }
+
+  .postcard-stamp {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 52px;
+  }
+
+  .stamp-grid {
+    gap: 12px;
+  }
+
+  /*
+     MEMORY STAMP MOBILE FIX
+     More breathing room so title and footer
+     don't collide on smaller screens.
+  */
+
+  .stamp-inner {
+    gap: 0;
+    padding: 8px;
+  }
+
+  .stamp-perforation {
+    font-size: 5px;
+  }
+
+  .stamp-topline {
+    min-height: 20px;
+    gap: 3px;
+  }
+
+  .stamp-topline span {
+    max-width: 70%;
+    font-size: 5px;
+  }
+
+  .stamp-topline strong {
+    font-size: 15px;
+  }
+
+  .stamp-icon {
+    font-size: 29px;
+    margin: 5px 0 3px;
+  }
+
+  .stamp-inner h3 {
+    min-height: 32px;
+    font-size: 15px;
+    line-height: 0.95;
+  }
+
+  .stamp-preview {
+    font-size: 8.5px;
+    max-width: 105px;
+    line-height: 1.15;
+    -webkit-line-clamp: 2;
+    margin-top: 5px;
+  }
+
+  .stamp-inner small {
+    padding-top: 5px;
+    font-size: 5.5px;
+  }
+
+  .stamp-barcode {
+    margin-top: 4px;
+    font-size: 5px;
+    letter-spacing: 0.7px;
+  }
+
+  /* DATE MEMO MOBILE */
+
+  .date-memo-section {
+    padding: 65px 14px;
+  }
+
+  .date-memo-section .section-kicker {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    gap: 7px;
+  }
+
+  .date-memo-card {
+    width: 100%;
+    box-shadow: 6px 6px 0 #242033;
+  }
+
+  .date-memo-tape {
+    width: 65px;
+    height: 19px;
+  }
+
+  .date-memo-tape.tape-left {
+    left: 25px;
+  }
+
+  .date-memo-tape.tape-right {
+    right: 25px;
+  }
+
+  .date-memo-header {
+    padding: 10px 12px;
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .date-memo-stamp {
+    top: 42px;
+    right: 14px;
+    width: 56px;
+    height: 56px;
+    box-shadow: 3px 3px 0 #242033;
+  }
+
+  .date-memo-stamp span {
+    font-size: 21px;
+  }
+
+  .date-memo-stamp small {
+    font-size: 6px;
+  }
+
+  .date-memo-content {
+    padding: 48px 18px 28px;
+  }
+
+  .date-memo-eyebrow {
+    font-size: 7px;
+    letter-spacing: 1.4px;
+  }
+
+  .date-memo-content h2 {
+    padding-right: 38px;
+    font-size: clamp(28px, 9vw, 40px);
+  }
+
+  .date-memo-intro {
+    margin: 15px auto 22px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .date-memo-details {
+    grid-template-columns: 1fr;
+  }
+
+  .date-memo-details > div {
+    padding: 10px;
+  }
+
+  .date-memo-details > div + div {
+    border-left: 0;
+    border-top: 2px dashed #242033;
+  }
+
+  .date-memo-details span {
+    margin-bottom: 3px;
+    font-size: 7px;
+  }
+
+  .date-memo-details strong {
+    font-size: 10px;
+  }
+
+  .date-memo-note {
+    font-size: 15px;
+  }
+
+  .date-question {
+    font-size: 19px;
+  }
+
+  .date-buttons-area {
+    gap: 10px;
+    min-height: 72px;
+  }
+
+  .date-yes-button,
+  .date-no-button,
+  .date-no-zone {
+    width: 105px;
+    min-width: 105px;
+  }
+
+  .date-yes-button,
+  .date-no-button {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 10px;
+  }
+
+  .date-silly-message {
+    font-size: 14px;
+  }
+
+  .date-confirmed {
+    padding: 17px 12px;
+  }
+
+  .date-confirmed strong {
+    font-size: 21px;
+  }
+
+  .date-confirmed p {
+    font-size: 16px;
+  }
+
+  .date-memo-footer {
+    padding: 8px 10px;
+    font-size: 6px;
+    gap: 5px;
+  }
+
+  .package-area h2 {
+    font-size: 35px;
+  }
+
+  .music-info {
+    align-items: flex-start;
+  }
+
+  .record {
+    width: 75px;
+    height: 75px;
+  }
+
+  .music-info h3 {
+    font-size: 23px;
+  }
+
+  .music-info p {
+    font-size: 17px;
+  }
+
+  .music-button {
+    right: 25px;
+  }
+
+  .music-status {
+    right: 25px;
+  }
+
+  .music-note-pill {
+    font-size: 6px;
+  }
+
+  .final-content h2 {
+    font-size: 52px;
+  }
+
+  .final-content p {
+    font-size: 16px;
+  }
+
+  .delivery-tracker {
+    transform: translateX(-50%) scale(0.9);
+    white-space: nowrap;
+  }
+
+  .memory-modal {
+    padding: 50px 25px 35px;
+  }
+
+  .memory-modal h2 {
+    font-size: 35px;
+  }
+
+  .memory-modal p {
+    font-size: 20px;
+  }
+
+  .modal-stamp-decoration {
+    display: none;
+  }
+}
+
+/* --------------------------------
+   VERY SMALL PHONES
+-------------------------------- */
+
+@media (max-width: 380px) {
+  .cake-sticker {
+    width: 88px;
+    min-height: 108px;
+    right: -2px;
+    top: 60px;
+    padding: 7px;
+  }
+
+  .cake-sticker-stars {
+    font-size: 7px;
+    letter-spacing: 5px;
+  }
+
+  .cake-sticker-cake {
+    transform: scale(0.88);
+    transform-origin: center;
+    margin-top: 3px;
+    margin-bottom: 1px;
+  }
+
+  .cake-sticker strong {
+    font-size: 10px;
+  }
+
+  .cake-sticker small {
+    font-size: 5.5px;
+  }
+
+  .stamp-inner {
+    padding: 7px;
+  }
+
+  .stamp-topline span {
+    font-size: 4.5px;
+  }
+
+  .stamp-topline strong {
+    font-size: 13px;
+  }
+
+  .stamp-icon {
+    font-size: 25px;
+    margin: 4px 0 2px;
+  }
+
+  .stamp-inner h3 {
+    min-height: 28px;
+    font-size: 13px;
+  }
+
+  .stamp-preview {
+    font-size: 7.5px;
+    max-width: 90px;
+  }
+
+  .stamp-inner small {
+    font-size: 5px;
+  }
+
+  .stamp-barcode {
+    font-size: 4.5px;
+  }
+
+  .date-memo-content {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .date-memo-stamp {
+    width: 49px;
+    height: 49px;
+    right: 10px;
+  }
+
+  .date-memo-stamp span {
+    font-size: 18px;
+  }
+
+  .date-memo-content h2 {
+    padding-right: 28px;
+    font-size: 27px;
+  }
+
+  .date-buttons-area {
+    gap: 7px;
+  }
+
+  .date-yes-button,
+  .date-no-button,
+  .date-no-zone {
+    width: 94px;
+    min-width: 94px;
+  }
+
+  .date-memo-footer {
+    gap: 5px;
+  }
+}
+
+/* --------------------------------
+   REDUCED MOTION
+-------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   FINAL OVERRIDES
+   MEMORY STAMPS + BIRTHDAY RSVP
+   Paste this at the VERY BOTTOM of index.css
+   ========================================================= */
+
+
+/* =========================================================
+   MEMORY STAMPS — FIX OVERLAPPING CONTENT
+   ========================================================= */
+
+.memory-stamps {
+  overflow: visible;
+}
+
+.stamp {
+  overflow: hidden;
+}
+
+.stamp-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 13px 12px 11px;
+
+  background: #fff;
+  border: 2px dashed #242033;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* top number/category */
+.stamp-topline {
+  width: 100%;
+  min-height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex: 0 0 auto;
+}
+
+.stamp-topline span,
+.stamp-topline small {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+/* icon */
+.stamp-icon {
+  flex: 0 0 auto;
+
+  width: 42px;
+  height: 42px;
+
+  margin: 7px 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+  line-height: 1;
+
+  border: 2px solid #242033;
+  border-radius: 50%;
+
+  background: #ffe45e;
+  box-shadow: 3px 3px 0 #242033;
+}
+
+/* title */
+.stamp-inner h3 {
+  width: 100%;
+
+  min-height: 38px;
+  max-height: 40px;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  font-family: "Bagel Fat One", cursive;
+  font-size: 17px;
+  line-height: 0.95;
+
+  overflow: hidden;
+
+  flex: 0 0 auto;
+}
+
+/* memory description */
+.stamp-preview {
+  width: 100%;
+  max-width: 175px;
+
+  height: 31px;
+  min-height: 31px;
+
+  margin: 6px 0 0;
+
+  font-family: "Schoolbell", cursive;
+  font-size: 11.5px;
+  line-height: 1.25;
+
+  text-align: center;
+
+  opacity: 0.72;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  flex: 0 0 auto;
+}
+
+/* KEEPING THIS ONE */
+.stamp-inner small {
+  width: 100%;
+
+  margin-top: auto;
+  padding-top: 7px;
+
+  text-align: center;
+
+  font-size: 7px;
+  line-height: 1.1;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  flex: 0 0 auto;
+}
+
+/* barcode */
+.stamp-barcode {
+  width: 62px;
+  height: 13px;
+
+  margin: 6px auto 0;
+
+  flex: 0 0 auto;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #242033 0 2px,
+      transparent 2px 4px,
+      #242033 4px 5px,
+      transparent 5px 8px
+    );
+
+  opacity: 0.8;
+}
+
+
+/* =========================================================
+   DATE MEMO / RSVP
+   ========================================================= */
+
+.date-section {
+  position: relative;
+
+  padding-top: 85px;
+  padding-bottom: 80px;
+
+  overflow: visible;
+}
+
+/* little decorative mail marks */
+.date-section::before {
+  content: "♡   ✦   ♡   ✦   ♡";
+
+  display: block;
+
+  margin-bottom: 18px;
+
+  text-align: center;
+
+  color: #f2528f;
+
+  font-family: "Bagel Fat One", cursive;
+  font-size: 15px;
+
+  letter-spacing: 6px;
+}
+
+
+/* main invitation */
+.date-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 850px;
+
+  margin: 0 auto;
+
+  padding: 48px 48px 38px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 3px solid #242033;
+
+  box-shadow: 9px 9px 0 #242033;
+
+  transform: rotate(-0.7deg);
+
+  overflow: hidden;
+}
+
+/* top decorative line */
+.date-card::before {
+  content: "SPECIAL DELIVERY";
+
+  position: absolute;
+
+  top: 16px;
+  left: 18px;
+
+  padding: 5px 9px;
+
+  background: #ffe45e;
+
+  border: 2px solid #242033;
+
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+
+  transform: rotate(-3deg);
+}
+
+/* diagonal stamp */
+.date-card::after {
+  content: "RSVP ♡";
+
+  position: absolute;
+
+  right: -29px;
+  bottom: 30px;
+
+  padding: 8px 42px;
+
+  background: #6bd5d8;
+
+  border: 2px solid #242033;
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+
+  transform: rotate(-9deg);
+}
+
+
+/* card header */
+.date-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  position: relative;
+  z-index: 2;
+}
+
+.date-eyebrow {
+  color: #f2528f;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.16em;
+}
+
+.date-sticker {
+  padding: 8px 12px;
+
+  background: #ffe45e;
+
+  border: 2px solid #242033;
+
+  box-shadow: 3px 3px 0 #242033;
+
+  font-family: "Bagel Fat One", cursive;
+  font-size: 11px;
+
+  transform: rotate(4deg);
+}
+
+
+/* BIG TITLE */
+.date-title {
+  max-width: 680px;
+
+  margin: 25px 0 14px;
+
+  font-family: "Bagel Fat One", cursive;
+
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 0.88;
+
+  position: relative;
+  z-index: 2;
+}
+
+.date-copy {
+  max-width: 690px;
+
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   DATE DETAILS
+   ========================================================= */
+
+.date-details {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin: 30px 0;
+
+  position: relative;
+  z-index: 2;
+}
+
+.date-detail {
+  min-height: 74px;
+
+  padding: 13px 14px;
+
+  box-sizing: border-box;
+
+  background: #fff7e9;
+
+  border: 2px dashed #242033;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.date-detail:nth-child(2) {
+  background: #fff0f6;
+}
+
+.date-detail:nth-child(3) {
+  background: #eefbfb;
+}
+
+.date-detail span {
+  display: block;
+
+  color: #f2528f;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+}
+
+.date-detail strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-family: "Schoolbell", cursive;
+
+  font-size: 17px;
+  line-height: 1.1;
+}
+
+
+/* =========================================================
+   RSVP QUESTION
+   ========================================================= */
+
+.date-question {
+  margin: 30px auto 0;
+
+  max-width: 600px;
+
+  text-align: center;
+
+  font-family: "Bagel Fat One", cursive;
+
+  font-size: clamp(20px, 3vw, 29px);
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   RSVP BUTTON AREA
+   ========================================================= */
+
+.date-actions {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 85px;
+
+  margin-top: 20px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  overflow: visible;
+}
+
+.date-button {
+  min-height: 48px;
+
+  padding: 12px 18px;
+
+  border: 2px solid #242033;
+
+  cursor: pointer;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 0.02em;
+
+  box-shadow: 4px 4px 0 #242033;
+
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  touch-action: manipulation;
+
+  -webkit-tap-highlight-color: transparent;
+
+  z-index: 5;
+}
+
+.date-button:hover {
+  box-shadow: 2px 2px 0 #242033;
+}
+
+.date-button:active {
+  box-shadow: 0 0 0 #242033;
+}
+
+
+/* YES */
+.date-yes {
+  background: #f2528f;
+  color: #fff;
+}
+
+.date-yes:hover {
+  transform: translate(-1px, -1px);
+}
+
+
+/* NO */
+.date-no {
+  background: #fff;
+  color: #242033;
+
+  transition:
+    left 0.2s ease,
+    top 0.2s ease,
+    transform 0.2s ease;
+}
+
+.date-no.is-running {
+  position: absolute;
+}
+
+
+/* =========================================================
+   RSVP RESPONSE
+   ========================================================= */
+
+.date-reply {
+  width: fit-content;
+  max-width: 90%;
+
+  margin: 15px auto 0;
+
+  padding: 12px 17px;
+
+  box-sizing: border-box;
+
+  background: #ffe45e;
+
+  border: 2px solid #242033;
+
+  box-shadow: 3px 3px 0 #242033;
+
+  text-align: center;
+
+  font-family: "Schoolbell", cursive;
+
+  font-size: 17px;
+
+  line-height: 1.25;
+
+  transform: rotate(-1deg);
+
+  opacity: 0;
+}
+
+.date-reply.show {
+  animation: rsvpPop 0.35s ease forwards;
+}
+
+.date-reply span {
+  margin-right: 5px;
+}
+
+@keyframes rsvpPop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) rotate(-4deg) scale(0.94);
+  }
+
+  70% {
+    transform: translateY(-2px) rotate(1deg) scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(-1deg) scale(1);
+  }
+}
+
+
+/* note */
+.date-mini-note {
+  margin-top: 20px;
+
+  text-align: center;
+
+  font-family: "Schoolbell", cursive;
+
+  font-size: 13px;
+
+  color: #f2528f;
+}
+
+
+/* hearts */
+.date-hearts {
+  margin-top: 18px;
+
+  text-align: center;
+
+  color: #f2528f;
+
+  font-family: "Bagel Fat One", cursive;
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+}
+
+
+/* =========================================================
+   RSVP ACCEPTED FEEL
+   ========================================================= */
+
+.date-reply.show::before {
+  content: "✦ ";
+
+  color: #f2528f;
+}
+
+.date-reply.show::after {
+  content: " ✦";
+
+  color: #f2528f;
+}
+
+
+/* =========================================================
+   MOBILE — MEMORY STAMPS
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .stamp-inner {
+    padding: 11px 9px 9px;
+  }
+
+  .stamp-topline {
+    min-height: 19px;
+  }
+
+  .stamp-topline span,
+  .stamp-topline small {
+    font-size: 7px;
+  }
+
+  .stamp-icon {
+    width: 36px;
+    height: 36px;
+
+    margin: 6px 0 5px;
+
+    font-size: 19px;
+
+    box-shadow: 2px 2px 0 #242033;
+  }
+
+  .stamp-inner h3 {
+    min-height: 34px;
+    max-height: 36px;
+
+    font-size: 14px;
+  }
+
+  .stamp-preview {
+    max-width: 145px;
+
+    height: 28px;
+    min-height: 28px;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+  }
+
+  .stamp-inner small {
+    padding-top: 5px;
+
+    font-size: 6px;
+  }
+
+  .stamp-barcode {
+    width: 50px;
+    height: 10px;
+
+    margin-top: 5px;
+  }
+
+
+  /* RSVP */
+
+  .date-section {
+    padding-top: 65px;
+    padding-bottom: 60px;
+  }
+
+  .date-section::before {
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    margin-bottom: 14px;
+  }
+
+  .date-card {
+    width: calc(100% - 10px);
+
+    padding: 43px 20px 30px;
+
+    box-shadow: 6px 6px 0 #242033;
+
+    transform: rotate(-0.4deg);
+  }
+
+  .date-card::after {
+    display: none;
+  }
+
+  .date-card::before {
+    top: 12px;
+    left: 12px;
+
+    font-size: 6px;
+
+    padding: 4px 7px;
+  }
+
+  .date-card-top {
+    gap: 10px;
+  }
+
+  .date-eyebrow {
+    font-size: 8px;
+  }
+
+  .date-sticker {
+    padding: 6px 8px;
+
+    font-size: 8px;
+
+    box-shadow: 2px 2px 0 #242033;
+  }
+
+  .date-title {
+    margin-top: 22px;
+
+    font-size: clamp(38px, 13vw, 58px);
+  }
+
+  .date-copy {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .date-details {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+
+    margin: 23px 0;
+  }
+
+  .date-detail {
+    min-height: 62px;
+
+    padding: 11px 12px;
+
+    text-align: center;
+  }
+
+  .date-detail span {
+    font-size: 7px;
+  }
+
+  .date-detail strong {
+    font-size: 16px;
+  }
+
+  .date-question {
+    margin-top: 24px;
+
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .date-actions {
+    min-height: 120px;
+
+    margin-top: 14px;
+
+    gap: 9px;
+  }
+
+  .date-button {
+    min-height: 45px;
+
+    padding: 10px 12px;
+
+    font-size: 10px;
+
+    box-shadow: 3px 3px 0 #242033;
+  }
+
+  .date-reply {
+    max-width: 95%;
+
+    padding: 10px 13px;
+
+    font-size: 15px;
+  }
+
+  .date-mini-note {
+    font-size: 11px;
+  }
+
+  .date-hearts {
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .stamp-inner {
+    padding: 9px 7px 8px;
+  }
+
+  .stamp-icon {
+    width: 32px;
+    height: 32px;
+
+    font-size: 17px;
+
+    margin: 5px 0 4px;
+  }
+
+  .stamp-inner h3 {
+    min-height: 31px;
+    max-height: 33px;
+
+    font-size: 12px;
+  }
+
+  .stamp-preview {
+    max-width: 125px;
+
+    height: 25px;
+    min-height: 25px;
+
+    font-size: 9px;
+  }
+
+  .stamp-inner small {
+    font-size: 5.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .stamp-barcode {
+    width: 43px;
+    height: 8px;
+  }
+
+
+  .date-card {
+    width: calc(100% - 6px);
+
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .date-card-top {
+    align-items: flex-start;
+  }
+
+  .date-eyebrow {
+    font-size: 7px;
+  }
+
+  .date-sticker {
+    font-size: 7px;
+
+    padding: 5px 7px;
+  }
+
+  .date-title {
+    font-size: 39px;
+  }
+
+  .date-copy {
+    font-size: 12px;
+  }
+
+  .date-question {
+    font-size: 19px;
+  }
+
+  .date-actions {
+    min-height: 125px;
+  }
+
+  .date-button {
+    font-size: 9px;
+
+    padding: 9px 10px;
+  }
+
+  .date-reply {
+    font-size: 14px;
+  }
+}
+
